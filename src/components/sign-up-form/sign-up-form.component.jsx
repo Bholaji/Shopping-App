@@ -1,8 +1,15 @@
-import { useState } from "react";
-import FormInput from "../form-input/form-input.component";
-import Button from "../button/button.component";
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../utils/firebase/firebase.utils"
-import './sign-up-form.style.scss'
+import { useState } from 'react';
+
+import FormInput from '../form-input/form-input.component';
+import Button from '../button/button.component';
+
+import
+{
+    createAuthUserWithEmailAndPassword,
+    createUserDocumentFromAuth,
+} from '../../utils/firebase/firebase.utils';
+
+import { SignUpContainer } from './sign-up-form.style';
 
 const defaultFormFields = {
     displayName: '',
@@ -15,7 +22,6 @@ const SignUpForm = () =>
 {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { displayName, email, password, confirmPassword } = formFields;
-
 
     const resetFormFields = () =>
     {
@@ -36,7 +42,7 @@ const SignUpForm = () =>
         {
             const { user } = await createAuthUserWithEmailAndPassword(
                 email,
-                password 
+                password
             );
 
             await createUserDocumentFromAuth(user, { displayName });
@@ -61,56 +67,49 @@ const SignUpForm = () =>
     };
 
     return (
-        <div className="sign-up-container">
+        <SignUpContainer>
             <h2>Don't have an account?</h2>
             <span>Sign up with your email and password</span>
             <form onSubmit={handleSubmit}>
-
                 <FormInput
                     label='Display Name'
-                    type="text"
+                    type='text'
                     required
+                    onChange={handleChange}
                     name='displayName'
                     value={displayName}
-                    onChange={handleChange}
-
                 />
 
                 <FormInput
                     label='Email'
-                    type="email"
+                    type='email'
                     required
+                    onChange={handleChange}
                     name='email'
                     value={email}
-                    onChange={handleChange}
-
                 />
 
                 <FormInput
                     label='Password'
-                    type="password"
+                    type='password'
                     required
+                    onChange={handleChange}
                     name='password'
                     value={password}
-                    onChange={handleChange}
-
                 />
 
                 <FormInput
                     label='Confirm Password'
-                    type="password"
+                    type='password'
                     required
+                    onChange={handleChange}
                     name='confirmPassword'
                     value={confirmPassword}
-                    onChange={handleChange}
-
                 />
-
-                <Button type="submit">Sign Up</Button>
+                <Button type='submit'>Sign Up</Button>
             </form>
-        </div>
+        </SignUpContainer>
+    );
+};
 
-    )
-}
-
-export default SignUpForm
+export default SignUpForm;
